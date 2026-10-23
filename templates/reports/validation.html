@@ -1,0 +1,110 @@
+```html id="l8z3qv"
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reading Validation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>✅ Reading Validation</h1>
+    <p>Checking meter readings for valid sequence and possible resets</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+
+            <div>
+                <h2 style="margin: 0;">✅ Validation Report</h2>
+
+                <p style="color: #666;">
+                    Check whether cumulative meter readings are in a valid sequence.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                style="display: inline-block; padding: 12px 20px; background: #1e3a8a; color: white; text-decoration: none; border-radius: 6px;"
+            >
+                🏠 Dashboard
+            </a>
+
+        </div>
+
+        <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 20px; color: #166534;">
+            📌 <strong>Validation Rule:</strong>
+            A cumulative meter reading should not be lower than the previous reading.
+        </div>
+
+        <table style="width: 100%; margin-top: 25px; border-collapse: collapse;">
+
+            <tr>
+                <th style="padding: 12px;">Meter ID</th>
+                <th style="padding: 12px;">Reading Date</th>
+                <th style="padding: 12px;">Cumulative kWh</th>
+                <th style="padding: 12px;">Previous Reading</th>
+                <th style="padding: 12px;">Status</th>
+            </tr>
+
+            {% for record in validation_records %}
+
+            <tr>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.meter_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.reading_date.strftime("%d-%m-%Y") }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ "%.2f"|format(record.cumulative_kwh) }} kWh
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+
+                    {% if record.previous_reading == record.previous_reading %}
+                        {{ "%.2f"|format(record.previous_reading) }} kWh
+                    {% else %}
+                        —
+                    {% endif %}
+
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+
+                    {% if record.status == "Valid" %}
+                        <span style="background: #dcfce7; color: #166534; padding: 6px 12px; border-radius: 20px;">
+                            ✅ Valid
+                        </span>
+                    {% else %}
+                        <span style="background: #fee2e2; color: #b91c1c; padding: 6px 12px; border-radius: 20px;">
+                            ⚠️ {{ record.status }}
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <p style="margin-top: 20px; color: #666;">
+            💡 A decreasing cumulative reading may indicate a meter reset or rollover and should be investigated.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

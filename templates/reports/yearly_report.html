@@ -1,0 +1,81 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yearly Consumption</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>📈 Yearly Consumption Report</h1>
+    <p>Total electricity consumption by meter and year</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+
+            <div>
+                <h2 style="margin: 0;">Yearly Consumption</h2>
+
+                <p style="color: #666;">
+                    View total electricity consumption for each meter by year.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                style="display: inline-block; padding: 12px 20px; background: #1e3a8a; color: white; text-decoration: none; border-radius: 6px;"
+            >
+                🏠 Dashboard
+            </a>
+
+        </div>
+
+        <table style="width: 100%; margin-top: 25px; border-collapse: collapse;">
+
+            <tr>
+                <th style="padding: 12px;">Meter ID</th>
+                <th style="padding: 12px;">Year</th>
+                <th style="padding: 12px;">Total Consumption (kWh)</th>
+            </tr>
+
+            {% for record in yearly_records %}
+
+            <tr>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.meter_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.year }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    <strong>
+                        {{ "%.2f"|format(record.consumption_kwh) }} kWh
+                    </strong>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <p style="margin-top: 20px; color: #666;">
+            📊 Yearly consumption is calculated by summing the valid monthly consumption values for each meter.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

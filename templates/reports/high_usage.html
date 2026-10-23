@@ -1,0 +1,107 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>High Usage Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🚨 High Usage Analysis</h1>
+    <p>Identify meters with unusually high electricity consumption</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+
+            <div>
+                <h2 style="margin: 0;">🚨 High Usage Meters</h2>
+
+                <p style="color: #666;">
+                    Consumption values above the configured threshold are flagged.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                style="display: inline-block; padding: 12px 20px; background: #1e3a8a; color: white; text-decoration: none; border-radius: 6px;"
+            >
+                🏠 Dashboard
+            </a>
+
+        </div>
+
+        <div style="background: #fff4e5; padding: 15px; border-radius: 8px; margin-top: 20px; color: #92400e;">
+            ⚠️ <strong>High-Usage Threshold:</strong> 500 kWh
+            <br>
+            Any monthly consumption above 500 kWh is considered high usage.
+        </div>
+
+        {% if high_usage_records %}
+
+        <table style="width: 100%; margin-top: 25px; border-collapse: collapse;">
+
+            <tr>
+                <th style="padding: 12px;">Meter ID</th>
+                <th style="padding: 12px;">Reading Date</th>
+                <th style="padding: 12px;">Month</th>
+                <th style="padding: 12px;">Consumption (kWh)</th>
+                <th style="padding: 12px;">Status</th>
+            </tr>
+
+            {% for record in high_usage_records %}
+
+            <tr>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.meter_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.reading_date.strftime("%d-%m-%Y") }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.month }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    <strong>
+                        {{ "%.2f"|format(record.consumption_kwh) }} kWh
+                    </strong>
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    🚨 High Usage
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <div style="background: #ecfdf5; color: #166534; padding: 15px; border-radius: 8px; margin-top: 25px;">
+            ✅ No high-usage readings were found.
+        </div>
+
+        {% endif %}
+
+        <p style="margin-top: 20px; color: #666;">
+            💡 High-usage readings can help identify unusual electricity consumption and support further analysis.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

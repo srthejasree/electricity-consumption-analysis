@@ -1,0 +1,101 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Meter Reading</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>📋 Add Meter Reading</h1>
+    <p>Record a new electricity meter reading</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <h2>⚡ New Meter Reading</h2>
+
+        <p style="color: #555;">
+            Enter the latest cumulative electricity reading for the selected meter.
+        </p>
+
+        <form method="POST">
+
+            {% if error %}
+            <div style="background: #ffe5e5; color: #b91c1c; padding: 12px; border-radius: 6px; margin-bottom: 20px;">
+                ⚠️ {{ error }}
+            </div>
+            {% endif %}
+
+            <label><strong>Meter</strong></label>
+
+            <select
+                name="meter_id"
+                required
+                style="width: 100%; padding: 12px; margin: 10px 0 20px; box-sizing: border-box;"
+            >
+
+                <option value="">Select Meter</option>
+
+                {% for meter in meters %}
+
+                <option value="{{ meter.meter_id }}">
+                    {{ meter.meter_id }} - {{ meter.meter_code }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <label><strong>Reading Date</strong></label>
+
+            <input
+                type="date"
+                name="reading_date"
+                required
+                style="width: 100%; padding: 12px; margin: 10px 0 20px; box-sizing: border-box;"
+            >
+
+            <label><strong>Cumulative Electricity Reading</strong></label>
+
+            <input
+                type="number"
+                name="cumulative_kwh"
+                step="0.01"
+                min="0"
+                placeholder="Example: 11000"
+                required
+                style="width: 100%; padding: 12px; margin: 10px 0 10px; box-sizing: border-box;"
+            >
+
+            <p style="color: #666; font-size: 14px; margin-bottom: 20px;">
+                📏 Unit: kWh (kilowatt-hour)
+            </p>
+
+            <button
+                type="submit"
+                style="padding: 12px 25px; margin-right: 10px;"
+            >
+                ➕ Add Reading
+            </button>
+
+            <a
+                href="{{ url_for('readings.readings') }}"
+                style="display: inline-block; padding: 12px 25px; background: #e5e7eb; color: #222; text-decoration: none; border-radius: 6px;"
+            >
+                ↩️ Back
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

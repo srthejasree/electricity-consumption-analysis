@@ -1,0 +1,80 @@
+```html id="u6xj7v"
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>⚡ Meter Management</h1>
+    <p>Manage registered electricity meters</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+
+            <div>
+                <h2 style="margin: 0;">Meter List</h2>
+
+                <p style="color: #666;">
+                    View all registered electricity meters.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('meters.add_meter') }}"
+                style="display: inline-block; padding: 12px 20px; background: #1e3a8a; color: white; text-decoration: none; border-radius: 6px;"
+            >
+                ➕ Add Meter
+            </a>
+
+        </div>
+
+        <table style="width: 100%; margin-top: 25px; border-collapse: collapse;">
+
+            <tr>
+                <th style="padding: 12px;">Meter ID</th>
+                <th style="padding: 12px;">Meter Code</th>
+                <th style="padding: 12px;">Consumer Type</th>
+                <th style="padding: 12px;">Region</th>
+            </tr>
+
+            {% for meter in meters %}
+
+            <tr>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ meter.meter_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ meter.meter_code }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ meter.consumer_type }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ meter.region }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

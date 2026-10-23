@@ -1,0 +1,211 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electricity Consumption Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>⚡ Electricity Consumption Analysis System</h1>
+    <p>Smart monitoring and analysis of electricity consumption</p>
+</div>
+
+<div class="container">
+
+    <!-- Dashboard Cards -->
+    <div class="cards">
+
+        <div class="card stat-card">
+            <h2>{{ total_consumers }}</h2>
+            <p>👥 Total Consumers</p>
+        </div>
+
+        <div class="card stat-card">
+            <h2>{{ total_meters }}</h2>
+            <p>⚡ Total Meters</p>
+        </div>
+
+        <div class="card stat-card">
+            <h2>{{ total_readings }}</h2>
+            <p>📋 Total Readings</p>
+        </div>
+
+        <div class="card stat-card">
+            <h2>{{ "%.2f"|format(total_consumption) }}</h2>
+            <p>⚡ Total Consumption (kWh)</p>
+        </div>
+
+    </div>
+
+    <!-- System Summary -->
+    <div class="card" style="margin-top: 30px;">
+
+        <h2>📌 System Summary</h2>
+
+        <p>
+            ⚡ <strong>Total Consumption:</strong>
+            {{ "%.2f"|format(total_consumption) }} kWh
+        </p>
+
+        <p>
+            🚨 <strong>High-Usage Threshold:</strong>
+            500 kWh
+        </p>
+
+        <p>
+            📏 <strong>Measurement Unit:</strong>
+            kWh (kilowatt-hour)
+        </p>
+
+        <p>
+            ✅ <strong>Reading Validation:</strong>
+            Enabled
+        </p>
+
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="menu">
+
+        <a href="{{ url_for('consumers.consumers') }}">
+            👥 Consumers
+        </a>
+
+        <a href="{{ url_for('meters.meters') }}">
+            ⚡ Meters
+        </a>
+
+        <a href="{{ url_for('readings.readings') }}">
+            📋 Meter Readings
+        </a>
+
+        <a href="{{ url_for('reports.monthly_report') }}">
+            📊 Monthly Consumption
+        </a>
+
+        <a href="{{ url_for('reports.yearly_report') }}">
+            📈 Yearly Consumption
+        </a>
+
+        <a href="{{ url_for('reports.high_usage_report') }}">
+            🚨 High Usage Analysis
+        </a>
+
+        <a href="{{ url_for('reports.validation_report') }}">
+            ✅ Reading Validation
+        </a>
+
+    </div>
+
+    <!-- Monthly Consumption -->
+    <div class="card" style="margin-top: 30px;">
+
+        <h2>📊 Monthly Consumption</h2>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+
+            <tr>
+                <th style="padding: 12px;">Meter ID</th>
+                <th style="padding: 12px;">Month</th>
+                <th style="padding: 12px;">Consumption (kWh)</th>
+            </tr>
+
+            {% for record in monthly_records %}
+
+            <tr>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.meter_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.month }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ "%.2f"|format(record.consumption_kwh) }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    <!-- High Usage Analysis -->
+    <div class="card" style="margin-top: 30px;">
+
+        <h2>🚨 High Usage Analysis</h2>
+
+        <p>
+            Readings above 500 kWh are flagged as high usage.
+        </p>
+
+        {% if high_usage_records %}
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+
+            <tr>
+                <th style="padding: 12px;">Meter ID</th>
+                <th style="padding: 12px;">Month</th>
+                <th style="padding: 12px;">Consumption (kWh)</th>
+                <th style="padding: 12px;">Status</th>
+            </tr>
+
+            {% for record in high_usage_records %}
+
+            <tr>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.meter_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ record.month }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ "%.2f"|format(record.consumption_kwh) }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    🚨 High Usage
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p>✅ No high-usage readings found.</p>
+
+        {% endif %}
+
+    </div>
+
+    <!-- Electricity Usage Chart -->
+    <div class="card" style="margin-top: 30px;">
+
+        <h2>📊 Electricity Usage Trend</h2>
+
+        <img
+            src="{{ url_for('static', filename='charts/usage_chart.png') }}"
+            alt="Electricity Consumption Trend"
+            style="width: 100%; max-width: 900px;"
+        >
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

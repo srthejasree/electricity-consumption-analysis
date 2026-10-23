@@ -1,0 +1,85 @@
+```html id="x3w2qk"
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meter Readings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>📋 Meter Reading Management</h1>
+    <p>View and manage electricity meter readings</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+
+            <div>
+                <h2 style="margin: 0;">Meter Reading List</h2>
+
+                <p style="color: #666;">
+                    View recorded cumulative electricity readings.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('readings.add_reading') }}"
+                style="display: inline-block; padding: 12px 20px; background: #1e3a8a; color: white; text-decoration: none; border-radius: 6px;"
+            >
+                ➕ Add Reading
+            </a>
+
+        </div>
+
+        <table style="width: 100%; margin-top: 25px; border-collapse: collapse;">
+
+            <tr>
+                <th style="padding: 12px;">Reading ID</th>
+                <th style="padding: 12px;">Meter ID</th>
+                <th style="padding: 12px;">Meter Code</th>
+                <th style="padding: 12px;">Reading Date</th>
+                <th style="padding: 12px;">Cumulative kWh</th>
+            </tr>
+
+            {% for reading in readings %}
+
+            <tr>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ reading.reading_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ reading.meter_id }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ reading.meter_code }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ reading.reading_date }}
+                </td>
+
+                <td style="padding: 12px; text-align: center;">
+                    {{ "%.2f"|format(reading.cumulative_kwh) }} kWh
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

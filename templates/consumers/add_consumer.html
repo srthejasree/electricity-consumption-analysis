@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Consumer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>👤 Add Consumer</h1>
+    <p>Add a new electricity consumer</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <form method="POST">
+
+            <label>Consumer Type</label>
+            <select name="consumer_type" required style="width: 100%; padding: 12px; margin: 10px 0 20px;">
+                <option value="">Select Type</option>
+                <option value="Residential">Residential</option>
+                <option value="Commercial">Commercial</option>
+            </select>
+
+            <label>Region</label>
+            <input type="text" name="region" placeholder="Enter region" required style="width: 100%; padding: 12px; margin: 10px 0 20px; box-sizing: border-box;">
+
+            <button type="submit" style="padding: 12px 25px;">
+                Add Consumer
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

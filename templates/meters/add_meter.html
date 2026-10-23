@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Meter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>⚡ Add Meter</h1>
+    <p>Add a new electricity meter</p>
+</div>
+
+<div class="container">
+
+    <div class="card" style="margin-top: 30px;">
+
+        <form method="POST">
+
+            <label>Consumer</label>
+            <select name="consumer_id" required style="width: 100%; padding: 12px; margin: 10px 0 20px;">
+                <option value="">Select Consumer</option>
+
+                {% for consumer in consumers %}
+                <option value="{{ consumer.consumer_id }}">
+                    {{ consumer.consumer_id }} - {{ consumer.consumer_type }} - {{ consumer.region }}
+                </option>
+                {% endfor %}
+
+            </select>
+
+            <label>Meter Code</label>
+            <input type="text" name="meter_code" placeholder="Example: HYD1006" required style="width: 100%; padding: 12px; margin: 10px 0 20px; box-sizing: border-box;">
+
+            <button type="submit" style="padding: 12px 25px;">
+                Add Meter
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
